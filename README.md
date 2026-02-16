@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Smart Bookmark Manager  
 
-## Getting Started
+A full-stack bookmark management web app that allows users to securely save, view, and manage personal bookmarks with Google authentication and real-time database syncing.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Live Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Google OAuth login using Supabase Auth
+- Add and delete personal bookmarks
+- User-specific data protection using Row Level Security (RLS)
+- Real-time updates across multiple tabs/devices
+- Serverless backend using Supabase
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+##  Tech Stack
 
-## Learn More
+**Frontend**
+- Next.js (App Router)
+- React
+- Tailwind CSS
 
-To learn more about Next.js, take a look at the following resources:
+**Backend / Database**
+- Supabase Postgres
+- Supabase Auth (Google OAuth)
+- Supabase Realtime subscriptions
+- Row Level Security (RLS)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+##  Project Structure
+app/
+├── page.tsx # Login page
+├── dashboard/
+│ └── page.tsx # Bookmark dashboard
+lib/
+└── supabaseClient.ts # Supabase connection
+.env.local # Environment variables
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+##  Authentication Flow
+
+1. User signs in using Google OAuth
+2. Supabase creates a secure session
+3. Session token used for database queries
+4. Row Level Security ensures users can only access their own bookmarks
+
+---
+
+##  Database Schema
+
+**Table: bookmarks**
+
+| Column      | Type      | Description |
+|------------|-----------|-------------|
+| id         | UUID      | Primary key |
+| user_id    | UUID      | References authenticated user |
+| title      | TEXT      | Bookmark title |
+| url        | TEXT      | Bookmark link |
+| created_at | TIMESTAMP | Auto-generated |
+
+---
+
+##  Security (RLS Policies)
+
+- Users can view only their own bookmarks
+- Users can insert only their own bookmarks
+- Users can delete only their own bookmarks
+
+---
+
+## Real-Time Sync
+The dashboard subscribes to Supabase realtime changes:
+
+- INSERT → auto appears in UI
+- DELETE → removed instantly
+- Works across multiple tabs/devices
+
+---
+
+
+##  How to Run Locally
+
+### 1. Clone repo
+git clone <repo-link>
+cd smart-bookmarks
+
+### 2. Install dependencies
+npm install
+
+### 3. Add environment variables
+Create `.env.local`
+NEXT_PUBLIC_SUPABASE_URL=your_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
+
+### 4. Start dev server
+Run - npm run dev
+Open:http://localhost:3000
+
+---
+
+##  Challenges Faced
+
+- Configuring Google OAuth redirect URLs correctly
+- Ensuring realtime updates triggered correctly
+- Handling session loading before fetching bookmarks
+
