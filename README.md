@@ -31,12 +31,12 @@ A full-stack bookmark management web app that allows users to securely save, vie
 
 ##  Project Structure
 app/
-├── page.tsx # Login page
-├── dashboard/
-│ └── page.tsx # Bookmark dashboard
+- ├── page.tsx # Login page
+- ├── dashboard/
+- │ └── page.tsx # Bookmark dashboard
 lib/
-└── supabaseClient.ts # Supabase connection
-.env.local # Environment variables
+- └── supabaseClient.ts # Supabase connection
+- .env.local # Environment variables
 
 
 ---
@@ -93,12 +93,12 @@ npm install
 
 ### 3. Add environment variables
 Create `.env.local`
-NEXT_PUBLIC_SUPABASE_URL=your_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
+- NEXT_PUBLIC_SUPABASE_URL=your_project_url
+- NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
 
 ### 4. Start dev server
 Run - npm run dev
-Open:http://localhost:3000
+- Open:http://localhost:3000
 
 ---
 
