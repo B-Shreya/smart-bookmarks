@@ -9,13 +9,22 @@ export default function Home() {
   const router = useRouter()
 
   
-  useEffect(() => {
-    const checkSession = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (user) router.replace("/dashboard")
+ useEffect(() => {
+  let mounted = true
+
+  const checkSession = async () => {
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (user && mounted) {
+      router.replace("/dashboard")
     }
-    checkSession()
-  }, [])
+  }
+
+  checkSession()
+
+  return () => { mounted = false }
+}, [])
+
 
  
   const login = async () => {
