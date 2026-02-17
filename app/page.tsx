@@ -31,7 +31,7 @@ export default function Home() {
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/dashboard`
+        redirectTo: process.env.NEXT_PUBLIC_SITE_URL + "/dashboard"
 
       }
     })
